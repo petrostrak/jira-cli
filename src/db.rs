@@ -1,12 +1,8 @@
-use std::{
-    fs::{self, File},
-    io::{self, Read, Write},
-    os::unix::prelude::FileExt,
-};
+use std::fs::{self};
 
 use anyhow::{Ok, Result};
 
-use crate::models::{DBState, Epic, Status, Story};
+use crate::models::DBState;
 
 trait Database {
     fn read_db(&self) -> Result<DBState>;
@@ -40,6 +36,8 @@ mod tests {
     mod database {
         use std::collections::HashMap;
         use std::io::Write;
+
+        use crate::models::{Epic, Status, Story};
 
         use super::*;
 
@@ -134,7 +132,6 @@ mod tests {
             let read_result = db.read_db().unwrap();
 
             assert_eq!(write_result.is_ok(), true);
-            // TODO: fix this error by deriving the appropriate traits for DBState
             assert_eq!(read_result, state);
         }
     }
