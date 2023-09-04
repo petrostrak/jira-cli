@@ -20,13 +20,9 @@ struct JSONFileDatabase {
 impl Database for JSONFileDatabase {
     fn read_db(&self) -> Result<DBState> {
         // read the content's of self.file_path and deserialize it using serde
-        let mut buffer = String::new();
-        let mut f = File::open(self.file_path.clone())?;
-
-        f.read_to_string(&mut buffer)?;
-
-        let json_db = serde_json::from_str(&buffer)?;
-        Ok(json_db)
+        let f = fs::read_to_string(self.file_path.clone())?;
+        let parsed = serde_json::from_str(&f)?;
+        Ok(parsed)
     }
 
     fn write_db(&self, db_state: &DBState) -> Result<()> {
