@@ -1,6 +1,10 @@
-use std::{fs::File, io::Read};
+use std::{
+    fs::{self, File},
+    io::{self, Read, Write},
+    os::unix::prelude::FileExt,
+};
 
-use anyhow::Result;
+use anyhow::{Ok, Result};
 
 use crate::models::{DBState, Epic, Status, Story};
 
@@ -26,7 +30,10 @@ impl Database for JSONFileDatabase {
     }
 
     fn write_db(&self, db_state: &DBState) -> Result<()> {
-        todo!() // serialize db_state to json and store it in self.file_path
+        // serialize db_state to json and store it in self.file_path
+        let json = serde_json::to_vec(db_state)?;
+        fs::write(&self.file_path, &json)?;
+        Ok(())
     }
 }
 
