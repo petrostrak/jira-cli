@@ -93,7 +93,16 @@ impl JiraDatabase {
     }
 
     pub fn update_epic_status(&self, epic_id: u32, status: Status) -> Result<()> {
-        todo!()
+        let mut parsed = self.database.read_db()?;
+
+        parsed
+            .epics
+            .get_mut(&epic_id)
+            .ok_or_else(|| anyhow!("could not find epic in database!"))?
+            .status = status;
+
+        self.database.write_db(&parsed)?;
+        Ok(())
     }
 
     pub fn update_story_status(&self, story_id: u32, status: Status) -> Result<()> {
