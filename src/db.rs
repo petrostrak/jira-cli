@@ -106,7 +106,16 @@ impl JiraDatabase {
     }
 
     pub fn update_story_status(&self, story_id: u32, status: Status) -> Result<()> {
-        todo!()
+        let mut parsed = self.database.read_db()?;
+
+        parsed
+            .stories
+            .get_mut(&story_id)
+            .ok_or_else(|| anyhow!("could not find story in database!"))?
+            .status = status;
+
+        self.database.write_db(&parsed)?;
+        Ok(())
     }
 }
 
