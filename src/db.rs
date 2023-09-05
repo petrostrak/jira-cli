@@ -3,7 +3,7 @@ use std::{
     fs::{self},
 };
 
-use anyhow::{Ok, Result};
+use anyhow::{anyhow, Ok, Result};
 
 use crate::models::{DBState, Epic, Status, Story};
 
@@ -35,7 +35,22 @@ impl JiraDatabase {
     }
 
     pub fn create_story(&self, story: Story, epic_id: u32) -> Result<u32> {
-        todo!()
+        let mut parsed = self.database.read_db()?;
+
+        let last_id = parsed.last_item_id;
+        let new_id = last_id + 1;
+
+        parsed.last_item_id = new_id;
+        parsed.stories.insert(new_id, story);
+        parsed
+            .epics
+            .get_mut(&epic_id)
+            .ok_or_else(|| anyhow!("could not find epic in database!"))?
+            .stories
+            .push(new_id);
+
+        self.database.write_db(&parsed)?;
+        Ok(new_id)
     }
 
     pub fn delete_epic(&self, epic_id: u32) -> Result<()> {
