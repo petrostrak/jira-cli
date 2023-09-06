@@ -23,7 +23,8 @@ impl Navigator {
     }
 
     pub fn get_current_page(&self) -> Option<&Box<dyn Page>> {
-        todo!() // this should always return the last element in the pages vector
+        // this should always return the last element in the pages vector
+        self.pages.last()
     }
 
     pub fn handle_action(&mut self, action: Action) -> Result<()> {
