@@ -58,7 +58,17 @@ fn create_story_prompt() -> Story {
 }
 
 fn delete_epic_prompt() -> bool {
-    todo!();
+    println!("----------------------------");
+
+    println!("Are you sure you want to delete this epic? All stories in this epic will also be deleted [Y/n]: ");
+
+    let input = get_user_input();
+
+    if input.trim().eq("Y") {
+        return true;
+    }
+
+    false
 }
 
 fn delete_story_prompt() -> bool {
