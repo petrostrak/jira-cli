@@ -153,7 +153,11 @@ impl Page for StoryDetail {
         println!("------------------------------ STORY ------------------------------");
         println!("  id  |     name     |         description         |    status    ");
 
-        // TODO: print out story details using get_column_string()
+        let id_col = get_column_string(&self.story_id.to_string(), 5);
+        let name_col = get_column_string(&story.name, 12);
+        let desc_col = get_column_string(&story.description, 27);
+        let status_col = get_column_string(&story.status.to_string(), 13);
+        println!("{} | {} | {} | {}", id_col, name_col, desc_col, status_col);
 
         println!();
         println!();
@@ -164,7 +168,17 @@ impl Page for StoryDetail {
     }
 
     fn handle_input(&self, input: &str) -> Result<Option<Action>> {
-        todo!() // match against the user input and return the corresponding action. If the user input was invalid return None.
+        match input {
+            "p" => Ok(Some(Action::NavigateToPreviousPage)),
+            "u" => Ok(Some(Action::UpdateStoryStatus {
+                story_id: self.story_id,
+            })),
+            "d" => Ok(Some(Action::DeleteStory {
+                epic_id: self.epic_id,
+                story_id: self.story_id,
+            })),
+            _ => Ok(None),
+        }
     }
 }
 
