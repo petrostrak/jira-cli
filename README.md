@@ -10,17 +10,6 @@ Two primary features in Jira will be implemented:
 
 ## Manual Tests
 
-Run these manual tests (___from top to bottom in order___) to see if your program works as expected.
-
-__NOTE:__ Before running these tests, reset the database by updating `data/db.json` to this:
-```json
-{
-    "last_item_id": 0,
-    "epics": {},
-    "stories": {}
-}
-```
-
 __Create Epic__
 
 Steps:
