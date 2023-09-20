@@ -8,8 +8,6 @@ Two primary features in Jira will be implemented:
 
 ![Alt Text](https://github.com/petrostrak/jira-cli/blob/main/jira-cli.gif)
 
-## Manual Tests
-
 __Create Epic__
 
 Steps:
